@@ -1,0 +1,14 @@
+{
+  "tests": [
+    {
+      "name": "TestEveryThing",
+      "setup": "docker-compose up -d",
+      "run": "docker exec bdda_api sh -c \"pytest\"",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 10,
+      "points": 15
+    }
+  ]
+}

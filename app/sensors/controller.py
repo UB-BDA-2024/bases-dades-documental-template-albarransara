@@ -72,7 +72,6 @@ def delete_sensor(sensor_id: int, db: Session = Depends(get_db), mongodb_client:
     db_sensor = repository.get_sensor(db, sensor_id)
     if db_sensor is None:
         raise HTTPException(status_code=404, detail="Sensor not found")
-    #raise HTTPException(status_code=404, detail="Not implemented")
     return repository.delete_sensor(db=db, sensor_id=sensor_id)
     
 
@@ -81,7 +80,7 @@ def delete_sensor(sensor_id: int, db: Session = Depends(get_db), mongodb_client:
 def record_data(sensor_id: int, data: schemas.SensorData,db: Session = Depends(get_db) ,redis_client: RedisClient = Depends(get_redis_client)):
     # First, check if sensor is on the database
     db_sensor = repository.get_sensor(db, sensor_id)
-    # If the sensor is not on the data base, we will rise an error
+    # If the sensor is not on the database, we will rise an error
     if db_sensor is None:
         raise HTTPException(status_code=404, detail="Sensor not found")
     # Else, we will post the new data
@@ -93,7 +92,7 @@ def record_data(sensor_id: int, data: schemas.SensorData,db: Session = Depends(g
 def get_data(sensor_id: int, db: Session = Depends(get_db) ,redis_client: RedisClient = Depends(get_redis_client)):
     # First, check if sensor is on the database
     db_sensor = repository.get_sensor(db, sensor_id)
-    # If the sensor is not on the data base, we will rise an error
+    # If the sensor is not on the database, we will rise an error
     if db_sensor is None:
         raise HTTPException(status_code=404, detail="Sensor not found")
     # Else we will return the data
@@ -102,4 +101,3 @@ def get_data(sensor_id: int, db: Session = Depends(get_db) ,redis_client: RedisC
         json['id'] = db_sensor.id
         json['name'] = db_sensor.name
         return json
-    #return repository.get_data(redis=redis_client, sensor_id=sensor_id, data=data)

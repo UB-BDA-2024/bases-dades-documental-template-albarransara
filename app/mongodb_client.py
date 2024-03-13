@@ -34,7 +34,7 @@ class MongoDBClient:
         col_sensors = self.getCollection("Sensors")
         # Insert sensor's data
         sensor = col_sensors.insert_one(document)
-        # Create an index for location
+        # Create an index for location so we can later search based on it
         col_sensors.create_index([("location", "2dsphere")])
         return sensor
 
@@ -45,5 +45,6 @@ class MongoDBClient:
         col_sensors = self.getCollection("Sensors")
         # Query to find nearest sensors
         query = {"location": SON([("$near", {"$geometry": SON([("type", "Point"), ("coordinates", [latitude, longitude]), ("$maxDistance", radius)])})])}
+        # Find sensors with query and convert result to json, so it can be iterable
         return json.loads(json_util.dumps(col_sensors.find(query)))
 

@@ -1,3 +1,4 @@
+[![Open in Visual Studio Code](https://classroom.github.com/assets/open-in-vscode-718a45dd9cf7e7f842a935f5ebbe5719a5e09af4491e668f4dbf3b35d5cca122.svg)](https://classroom.github.com/online_ide?assignment_repo_id=14098895&assignment_repo_type=AssignmentRepo)
 # Pràctica 3: Bases de dades documentals
 
 Benvingut/da a la tercera pràctica de l'assignatura de Bases de dades clau valor. Aquesta pràctica parteix de la plantilla de la pràctica anterior. Com sabeu tenim una API REST que ens permet crear, esborrar, modificar i consultar les dades d'una aplicació de sensors. Durant aquesta pràctica, treballarem amb una base de dades documental i farem servir MongoDB per a implementar-la.

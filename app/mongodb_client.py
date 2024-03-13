@@ -1,5 +1,7 @@
-from pymongo import MongoClient
-
+from pymongo import MongoClient,GEO2D
+from bson.son import SON
+from bson import json_util
+import json
 class MongoDBClient:
     def __init__(self, host="localhost", port=27017):
         self.host = host
@@ -25,4 +27,23 @@ class MongoDBClient:
     def clearDb(self,database):
         self.client.drop_database(database)
 
+    def add_sensor(self, document):
+        # Select database
+        self.getDatabase("SensorsDB")
+        # Select Sensor's collection
+        col_sensors = self.getCollection("Sensors")
+        # Insert sensor's data
+        sensor = col_sensors.insert_one(document)
+        # Create an index for location
+        col_sensors.create_index([("location", "2dsphere")])
+        return sensor
+
+    def get_near_sensors(self, latitude, longitude,radius):
+        # Select database
+        self.getDatabase("SensorsDB")
+        # Select collection
+        col_sensors = self.getCollection("Sensors")
+        # Query to find nearest sensors
+        query = {"location": SON([("$near", {"$geometry": SON([("type", "Point"), ("coordinates", [latitude, longitude]), ("$maxDistance", radius)])})])}
+        return json.loads(json_util.dumps(col_sensors.find(query)))
 
